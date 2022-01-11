@@ -2824,6 +2824,12 @@ h3 {
     position: relative
 }
 
+.pencil-after-on .game-controls .game-controls-pencil .svg-wrapper:after{
+
+    background-color: #00a08f!important;
+    content: "ON"!important;
+}
+
 .game-controls .game-controls-pencil .svg-wrapper:after {
     content: "OFF";
     display: inline-block;

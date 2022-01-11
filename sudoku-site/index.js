@@ -142,6 +142,7 @@ const lastEvent = {
     notes: false
 };
 let notes = false;
+let pencilON = false;
 Init();
 
 
@@ -492,8 +493,19 @@ function InitControlEvents() {
     }
 }
 
-function Pencil() {
+function Pencil(e) {
     console.log('Pencil');
+    pencilON = !pencilON;
+
+
+    const controlPencil = document.getElementsByClassName('game-controls-wrapper');
+
+    if (pencilON) {
+        controlPencil[0].classList.add('pencil-after-on');
+    }
+    else {
+        controlPencil[0].classList.remove('pencil-after-on');
+    }
 }
 
 function Hint() {
@@ -517,6 +529,19 @@ function Undo() {
 
 function Erase() {
     console.log('Erase');
+    const nomeBloco = _retornaNomeDoBlocoByElement(blocoAtual);
+    const bloco = mapa[nomeBloco];
+
+    if (bloco.initial != 0)
+        return;
+    RemoveBlocoValue(nomeBloco, bloco.initial);
+
+
+
+    const classes = ['mistake', 'conflict']
+
+    CleanWhyIsItWrong(classes, nomeBloco);
+
 }
 
 function AddBlocoValue(nomeBloco, value, addClass, removeClass) {
