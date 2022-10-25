@@ -8,7 +8,7 @@ const classHiglightTable = 'highlight-table';
 const classMistake = 'mistake';
 const classConflict = 'conflict';
 //const url = 'https://api.rocktools.com.br/sudoku/'; /*http://localhost:3000/sudoku/*/
-const url = 'https://converter.blog.br/sudoku/'
+const url = 'https://api.rocktools.com.br/sudoku/';
 const startSVG = ["SVG0", "SVG1", "SVG2", "SVG3", "SVG4", "SVG5", "SVG6", "SVG7", "SVG8", "SVG9"];
 const maxBlocos = 81;
 let mapa = {
@@ -172,6 +172,7 @@ function Init() {
 }
 
 function fetchSudoku() {
+
     const fetchURL = url + dificuldade.toString();
     fetch(fetchURL)
         .then((response) => {
@@ -203,13 +204,15 @@ function CleanSudoku() {
         const _nomeBloco = _retornaNomeDoBlocoByIndex(index);
         const _bloco = _querySelectorByBloco(_nomeBloco);
         _bloco.classList.remove(classGameValue);
+        _bloco.classList.remove(classHiglightTable);
+        _bloco.classList.remove(classMistake);
+        _bloco.classList.remove(classConflict);
         const _cellValue = _bloco.querySelector(classCellValue);
         let _atualSVG = _cellValue.querySelector('svg');
         if (_atualSVG)
             _atualSVG.remove();
     }
 }
-
 
 function InitDificuldadeEvents() {
     document.querySelector('.difficulty-label').addEventListener('click', (e) => {
@@ -518,7 +521,10 @@ function Hint() {
     if (bloco.initial != 0)
         return;
 
-    AddBlocoValue(nomeBloco, bloco.gabarito);
+
+    const classes = ['mistake', 'conflict']
+    AddBlocoValue(nomeBloco, bloco.gabarito, null, classes);
+    CleanWhyIsItWrong(classes, nomeBloco, bloco.gabarito);
 }
 
 function Undo() {

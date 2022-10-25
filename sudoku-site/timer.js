@@ -1,5 +1,5 @@
 
-class Timer{
+class Timer {
     constructor(elementID) {
         this.contador = 0;
         this.elementID = elementID;
@@ -8,12 +8,12 @@ class Timer{
 
 
     Play() {
-        console.log('começamos');
-        this.timeInterval = setInterval(() => { 
+        console.log('Play timer');
+        this.timeInterval = setInterval(() => {
             this.contador++;
             this.Show();
         }, 1000);
-        
+
 
     }
 
@@ -22,12 +22,13 @@ class Timer{
     }
 
     Damage(valorDano) {
-        if(Number.isInteger(valorDano))
+        if (Number.isInteger(valorDano))
             this.contador = this.contador + valorDano;
     }
 
     Restart() {
         this.contador = 0;
+        clearInterval(this.timeInterval);
         this.Play();
     }
 
